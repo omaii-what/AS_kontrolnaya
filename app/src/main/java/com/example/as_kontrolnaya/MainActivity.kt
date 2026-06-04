@@ -1,56 +1,68 @@
 package com.example.as_kontrolnaya
 
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.as_kontrolnaya.databinding.ActivityMainBinding
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
-import kotlin.properties.Delegates.notNull
+import kotlin.math.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
-    private var g by notNull<Boolean>()
-    var total = false
-    var each = false
-    var pplAmount = false
-    var tips = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        if (savedInstanceState == null){
-            g = false
-        }else{
-            g = savedInstanceState.getBoolean(KEY_IS_VISIBLE)
-        }
+        binding.tipsPercent.setText("15")
+        binding.peopleAmount.setText("1")
 
-        binding.roundUp.setOnClickListener {
-            if(binding.roundUp.isChecked){g = false
-                render()}
-        }
-        binding.roundDown.setOnClickListener {
-            if (binding.roundDown.isChecked) {g = true
-                render()}
-        }
-        binding.roundClosest.setOnClickListener {
-            if (binding.roundClosest.isChecked) {g = true
-                render()}
+        binding.countButton.setOnClickListener {
+            calculate()
         }
     }
 
-    private fun render() = with(binding){
-        roundPick.visibility = if (g) View.VISIBLE else View.INVISIBLE
-    }
+    private fun calculate() = with(binding) {
+        try {
+            val bill = totalAmount.text.toString().toDouble()
+            val tipsPercent = if (tipsPercent.text.toString().isEmpty()) 15 else tipsPercent.text.toString().toInt()
+            val people = if (peopleAmount.text.toString().isEmpty()) 1 else peopleAmount.text.toString().toInt()
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(KEY_IS_VISIBLE,g)
-    }
+            if (bill <= 0 || tipsPercent < 5 || tipsPercent > 30 || people < 1 || people > 20) {
+                Toast.makeText(this@MainActivity, "Ошибка в данных", Toast.LENGTH_SHORT).show()
+                return
+            }
 
-    companion object{
-        @JvmStatic private val KEY_IS_VISIBLE = "IS_VISIBLE"
+            var tips = bill * (tipsPercent / 100.0)
+
+            if (roundUp.isChecked) {
+                if (tips > tips.toInt()) {
+                    tips = (tips.toInt() + 1).toDouble()
+                }
+            }
+            if (roundDown.isChecked) {
+                tips = tips.toInt().toDouble()
+            }
+            if (roundClosest.isChecked) {
+                val drob = tips - tips.toInt()
+                if (drob >= 0.5) {
+                    tips = (tips.toInt() + 1).toDouble()
+                } else {
+                    tips = tips.toInt().toDouble()
+                }
+            }
+
+            val total = bill + tips
+            val each = total / people
+
+            billText.text = "Сумма чаевых: %.2f".format(tips)
+            sumText.text = "Общая сумма: %.2f".format(total)
+            eachText.text = "На каждого: %.2f".format(each)
+
+            hiddenSum.visibility = android.view.View.VISIBLE
+
+        } catch(e: Exception) {
+            Toast.makeText(this@MainActivity, "Ошибка", Toast.LENGTH_SHORT).show()
+        }
     }
 }

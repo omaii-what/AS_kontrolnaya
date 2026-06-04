@@ -1,120 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:padding="16dp">
 
-    <GridLayout
-        android:layout_marginTop="35dp"
-        android:id="@+id/info"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/Bill"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:text="Рассчет чека"
+            android:layout_height="wrap_content"
+            android:text="Расчет чека"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="30dp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/peopleAmount"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Количество человек"
-            android:inputType="text|number"/>
-
-        <EditText
-            android:id="@+id/eachAmount"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Сумма каждого"
-            android:inputType="text|number"/>
+            android:layout_marginBottom="20dp"/>
 
         <EditText
             android:id="@+id/totalAmount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Общая сумма"
-            android:inputType="text|number"/>
+            android:hint="Сумма счета"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="10dp"/>
 
         <EditText
             android:id="@+id/tipsPercent"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Процент чаевых (от 5% до 30%)"
-            android:inputType="text|number"/>
-    </GridLayout>
+            android:hint="Процент чаевых (5-30)"
+            android:inputType="number"
+            android:layout_marginBottom="10dp"/>
 
-    <GridLayout
-        android:id="@+id/roundingPick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/info"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/peopleAmount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Количество человек"
+            android:inputType="number"
+            android:layout_marginBottom="20dp"/>
 
-    <TextView
-        android:id="@+id/rounding"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:text="Округление:"
-        app:layout_constraintTop_toBottomOf="@id/info"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-    </GridLayout>
-
-    <GridLayout
-        android:id="@+id/roundPick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/info"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="15dp"
-        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Округление:"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <RadioGroup
             android:id="@+id/round"
-            android:checkedButton="@id/roundUp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp">
 
             <RadioButton
                 android:id="@+id/roundUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="В большую сторону" />
+                android:text="В большую сторону"/>
 
             <RadioButton
                 android:id="@+id/roundDown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="В меньшую сторону" />
+                android:text="В меньшую сторону"/>
 
             <RadioButton
                 android:id="@+id/roundClosest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="К ближайшему" />
+                android:text="К ближайшему"
+                android:checked="true"/>
         </RadioGroup>
 
-    </GridLayout>
+        <Button
+            android:id="@+id/countButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Рассчитать"
+            android:layout_marginBottom="20dp"/>
+
+        <GridLayout
+            android:id="@+id/hiddenSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/billText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Сумма чаевых: "
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/sumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Общая сумма: "
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/eachText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="На каждого: "
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+        </GridLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,6 @@ android {
     }
 
     buildFeatures{
-        compose = true
-        dataBinding = true
         viewBinding = true
     }
 
@@ -33,8 +31,6 @@ android {
             )
         }
     }
-
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
