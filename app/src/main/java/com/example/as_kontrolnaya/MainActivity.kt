@@ -28,8 +28,18 @@ class MainActivity : AppCompatActivity() {
             val tipsPercent = if (tipsPercent.text.toString().isEmpty()) 15 else tipsPercent.text.toString().toInt()
             val people = if (peopleAmount.text.toString().isEmpty()) 1 else peopleAmount.text.toString().toInt()
 
-            if (bill <= 0 || tipsPercent < 5 || tipsPercent > 30 || people < 1 || people > 20) {
-                Toast.makeText(this@MainActivity, "Ошибка в данных", Toast.LENGTH_SHORT).show()
+            if (bill <= 0) {
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректную сумму", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            if (bill <= 0 || tipsPercent < 5 || tipsPercent > 30) {
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректные чаевые", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            if (people < 1 || people > 20) {
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректное число людей", Toast.LENGTH_SHORT).show()
                 return
             }
 
