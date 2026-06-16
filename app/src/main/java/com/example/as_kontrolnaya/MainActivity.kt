@@ -29,17 +29,17 @@ class MainActivity : AppCompatActivity() {
             val people = peopleAmount.text.toString().toInt()
 
             if (bill <= 0) {
-                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректную сумму", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректную сумму", Toast.LENGTH_SHORT).show()
                 return
             }
 
             if (tipsPercent <= 0 || tipsPercent < 5 || tipsPercent > 30) {
-                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректные чаевые", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректные чаевые", Toast.LENGTH_SHORT).show()
                 return
             }
 
             if (people < 1 || people > 20) {
-                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректное число людей", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "ОШИБКА!! Укажите корректное число людей", Toast.LENGTH_SHORT).show()
                 return
             }
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             hiddenSum.visibility = android.view.View.VISIBLE
 
         } catch(e: Exception) {
-            Toast.makeText(this@MainActivity, "Ошибка", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Ошибка", Toast.LENGTH_SHORT).show()
         }
     }
 }
